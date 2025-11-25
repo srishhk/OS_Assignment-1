@@ -1,0 +1,83 @@
+====== Operating System Lab Assignment 1 ======
+
+--- Task 1: Creating 3 Child Processes using os.fork() ---
+Parent (PID:6960): Forked child with PID 6967
+  Child-1: PID=6967, Parent PID=6960
+Parent (PID:6960): Forked child with PID 6968
+  Child-2: PID=6968, Parent PID=6960
+  Child-3: PID=6969, Parent PID=6960
+Parent (PID:6960): Forked child with PID 6969
+Parent: All child processes have finished.
+--------------------------------------------------
+
+--- Task 2: Executing Commands in Child Processes ---
+
+  Child (PID:6988) executing: 'ls -l'
+total 8
+-rwxrwxrwx 1 root root 8094 Oct  3 11:34 process_management.py
+Parent: Child for 'List Files' has finished.
+
+  Child (PID:6989) executing: 'date'
+Fri Oct  3 11:34:55 UTC 2025
+Parent: Child for 'Current Date' has finished.
+
+  Child (PID:6990) executing: 'ps aux'
+USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          1  0.0  0.1  21884 12816 ?        Ss   10:41   0:01 /usr/lib/systemd/systemd --system --deserialize=53
+...
+krish     4012  0.0  0.0   2800  1728 pts/3    S+   11:21   0:00 sh /home/krish/.vscode-server/bin/e3a5acfb517a443235981655413d56653310
+krish     4016  0.4  1.4 11839160 117284 pts/3 Sl+  11:21   0:03 /home/krish/.vscode-server/bin/e3a5acfb517a443235981655413d56653310
+root      4027  0.0  0.0   3080   864 ?        Ss   11:21   0:00 /init
+root      4028  0.0  0.0   3096  1008 ?        S    11:21   0:00 /init
+krish     4029  0.0  0.7 1019024 59760 pts/4   Ssl+ 11:21   0:00 /home/krish/.vscode-server/bin/e3a5acfb517a443235981655413d56653310
+root      4040  0.0  0.0   3080   864 ?        Ss   11:21   0:00 /init
+root      4041  0.0  0.0   3096  1152 ?        S    11:21   0:00 /init
+krish     4046  0.1  0.6 1012448 54748 pts/5   Ssl+ 11:21   0:01 /home/krish/.vscode-server/bin/e3a5acfb517a443235981655413d56653310
+krish     4057  0.0  0.7 1261792 57656 pts/3   Sl+  11:21   0:00 /home/krish/.vscode-server/bin/e3a5acfb517a443235981655413d56653310
+V         4078  2.4  1.7 33432524 139888 pts/3 Sl+ 11:21   0:20 /home/krish/.vscode-server/bin/e3a5acfb517a443235981655413d56653310
+krish     5236  0.4  0.9 1065304 70876 pts/3   Sl+  11:27   0:01 /home/krish/.vscode-server/bin/e3a5acfb517a443235981655413d56653310
+krish     5247  0.0  0.0   6208  5184 pts/6    Ss   11:27   0:00 /bin/bash --init-file /home/krish/.vscode-server/bin/e3a5acfb517a44
+root      6958  0.7  0.0  14152  6768 pts/6    S+   11:34   0:00 sudo python3 process_management.py
+root      6959  0.0  0.0  14152  2496 pts/7    Ss   11:34   0:00 sudo python3 process_management.py
+root      6960  2.5  0.1  15744 10512 pts/7    S+   11:34   0:00 python3 process_management.py
+krish     6977  0.0  0.0   2800  1584 pts/3    S+   11:34   0:00 /bin/sh -c "/home/krish/.vscode-server/bin/e3a5acfb517a443235981655
+krish     6978  0.0  0.0   4752  3456 pts/3    S+   11:34   0:00 /bin/bash /home/krish/.vscode-server/bin/e3a5acfb517a44323598165541
+krish     6987  0.0  0.0   3124  1728 pts/3    S+   11:34   0:00 sleep 1
+root      6990  0.0  0.0   8280  4176 pts/7    R+   11:34   0:00 ps aux
+Parent: Child for 'Running Processes' has finished.
+
+Parent: All command-executing children have finished.
+--------------------------------------------------
+
+--- Task 3: Simulating Zombie & Orphan Processes ---
+
+-- Part A: Zombie Process --
+  Parent (PID:6960): Created child 6991, not waiting.
+  >> The child is now a zombie. Check with 'ps -el | grep defunct' in another terminal.
+  Zombie Child (PID:6991): Exiting now.
+  Parent: Cleaned up the zombie process.
+
+-- Part B: Orphan Process --
+  Parent (PID:6960): Exiting before my child.
+  Orphan Child (PID:7040): My parent is 6960.
+  Orphan Child: My original parent died. My new parent is 6960 (init/systemd).
+
+Parent: Orphan simulation complete.
+--------------------------------------------------
+
+--- Task 4: Inspecting Process PID 6960 from /proc ---
+  Name: python3
+  State:        R (running)
+  VmSize:          15744 kB
+  Executable Path: /usr/bin/python3.12
+  Open File Descriptors: 4
+--------------------------------------------------
+
+--- Task 5: Demonstrating Process Prioritization (CPU Overload) ---
+  Detected 18 CPU cores. Creating 36 processes to ensure competition.
+  Starting a mix of default-priority and low-priority children...
+  [Default Priority and Low Priority process logs...]
+  Observe the finish times: the 'Default Priority' processes should have generally finished earlier than the 'Low Priority' ones.
+--------------------------------------------------
+
+======== All Tasks Completed ========
